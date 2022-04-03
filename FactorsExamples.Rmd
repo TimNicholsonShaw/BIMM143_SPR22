@@ -1,0 +1,83 @@
+---
+title: "Factors are cool"
+output: html_notebook
+---
+
+I surveyed 10 biologists about their favorite nucleic acid and put 
+their responses into a vector.
+```{r}
+# Hard coding the survey results.
+# R allows you to split things between parentheses onto multiple lines
+# to make it easier to read.
+favorite_nucleic_acid <- c("T", "A", "U", "U", "A", 
+                           "C", "T", "U", "A", "U") 
+```
+We can summarize this data with the table function
+```{r}
+table(favorite_nucleic_acid)
+```
+We can also take a look at a barplot using graphing functions we'll learn
+more about later in the course
+```{r}
+barplot(table(favorite_nucleic_acid))
+```
+R counted the number of responses, but as biologists, we know that there's
+one other nucleotide that no one picked. This creates an awkward situations
+where people might think we don't know Guanine exists. Using a factor, we can let 
+R know that G was a possible option.
+```{r}
+# Convert to factor and giving it a levels argument
+factor_favorite_nucleic_acid <- factor(favorite_nucleic_acid,
+                                      levels=c("A", "C", "G", "T", "U"))
+
+# Summarizing the data with table()
+table(factor_favorite_nucleic_acid)
+
+# A more common way of summarizing factors:
+# summary(factor_favorite_nuceic_acid)
+
+
+```
+With a barplot
+```{r}
+# create a barplot with base R plotting
+barplot(table(factor_favorite_nucleic_acid))
+```
+Now R knows that G exists, but that no one likes it :(
+
+######################################################################
+Another example: I survey 10 people about their favorite day of the week
+```{r}
+# Survey results as a vector
+favorite_day <- c("Saturday", "Tuesday", "Saturday", "Saturday", "Wednesday", 
+                     "Sunday", "Thursday", "Friday", "Friday")
+
+# Summarize with table() function
+table(favorite_day)
+```
+Checking out on a barplot
+```{r}
+# create a barplot and rotate labels for readability
+barplot(table(favorite_day), las=2)
+```
+2 problems now. We're missing Monday (no one likes Mondays). But also, we know
+that there's an order to these days. So it's weird and confusing to see them
+jumbled like this.
+
+Factors can fix this!
+```{r}
+# convert to factor with ordered levels
+factor_favorite_day <- factor(favorite_day,
+                                 ordered=TRUE,
+                                 levels=c("Monday", "Tuesday", "Wednesday",
+                                          "Thursday", "Friday", "Saturday", "Sunday"))
+#output a table
+table(factor_favorite_day)
+```
+as a barplot
+```{r}
+# create a barplot and rotate labels for readability
+barplot(summary(factor_favorite_day), las=2) 
+```
+
+
